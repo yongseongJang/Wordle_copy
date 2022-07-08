@@ -1,20 +1,27 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { css } from '@emotion/react';
 
 import { history } from '../../utils/history';
 
 import { Button } from '../../components';
+import { CustomModal } from '../../features';
 
 function Home() {
-  const handleClickPlayButton = useCallback(() => {
+  const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
+
+  const handlePlayBtnClick = useCallback(() => {
     history.replace('/game');
   }, []);
 
-  const handleClickMakeButton = useCallback(() => {
-    return false;
+  const handleMakeBtnClick = useCallback(() => {
+    setIsVisibleModal(true);
   }, []);
+
+  const handleCloseBtnClick = useCallback(() => {
+    setIsVisibleModal(!isVisibleModal);
+  }, [isVisibleModal]);
 
   return (
     <div css={HomeStyle}>
@@ -22,7 +29,7 @@ function Home() {
         <h1>Wordle</h1>
         <Button
           text={'Make your own wordle'}
-          onClick={handleClickMakeButton}
+          onClick={handleMakeBtnClick}
           style={{
             fontSize: '20px',
             margin: '0 auto 30px auto',
@@ -30,12 +37,16 @@ function Home() {
         />
         <Button
           text={'Play Random Word'}
-          onClick={handleClickPlayButton}
+          onClick={handlePlayBtnClick}
           style={{
             fontSize: '20px',
           }}
         />
       </div>
+      <CustomModal
+        isVisible={isVisibleModal}
+        onCloseBtnClick={handleCloseBtnClick}
+      />
     </div>
   );
 }

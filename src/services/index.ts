@@ -1,0 +1,1 @@
+export { wordValidationServices } from './wordValidationService';

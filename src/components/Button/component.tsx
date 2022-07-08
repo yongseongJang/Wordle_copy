@@ -21,7 +21,6 @@ interface ButtonProps {
 }
 
 function Button(props: ButtonProps) {
-  console.log(props);
   return (
     <div css={ButtonStyle(props.style)} onClick={props.onClick}>
       <span>{props.text}</span>
