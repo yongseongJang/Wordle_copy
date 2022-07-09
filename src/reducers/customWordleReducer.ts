@@ -12,7 +12,7 @@ interface State {
 const defaultValues: State = {
   isRequesting: false,
   errorMsg: null,
-  word: null,
+  word: '',
   pathVariable: null,
 };
 
@@ -28,11 +28,13 @@ export const customWordleReducer = (
 ) => {
   const { type, payload } = action;
   switch (type) {
-    case customWordleConstants.CHANGE_WORDLE:
+    case customWordleConstants.CHANGE_WORD:
       return state
         .update('word', () => payload.word)
         .update('errorMsg', () => null)
         .update('pathVariable', () => null);
+    case customWordleConstants.RESET:
+      return initialState;
     case customWordleConstants.REQUEST_GENERATE_WORDLE:
       return state.update('isRequesting', () => true);
     case customWordleConstants.GENERATE_WORDLE_SUCCESS:

@@ -1,6 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { css } from '@emotion/react';
+
+import { customWordleActions } from '../../actions';
 
 import { Input } from './Input';
 import { GenerateButton } from './GenerateButton';
@@ -13,17 +17,24 @@ interface CustomModalProps {
 }
 
 function CustomModal(props: CustomModalProps) {
+  const dispatch = useDispatch();
+
+  const handleClick = useCallback(() => {
+    props.onCloseBtnClick();
+
+    dispatch(customWordleActions.reset());
+  }, [props.onCloseBtnClick]);
   return (
     <div css={popupStyle(props.isVisible)}>
       <div css={dimmedStyle}></div>
       <div css={customModalStyle}>
-        <div css={closeBtnStyle} onClick={props.onCloseBtnClick}>
+        <div css={closeBtnStyle} onClick={handleClick}>
           <span className='line1'></span>
           <span className='line2'></span>
         </div>
         <div css={contentStyle}>
           <h1>Make Custom Wordle</h1>
-          <h2>The length of a word is 5.</h2>
+          <h2>The length of a word is 5</h2>
           <div>
             <Input />
           </div>

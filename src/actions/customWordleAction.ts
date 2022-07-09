@@ -1,5 +1,6 @@
 export const customWordleConstants = {
-  CHANGE_WORDLE: 'CHANGE_WORD',
+  CHANGE_WORD: 'CHANGE_WORD',
+  RESET: 'RESET',
   REQUEST_GENERATE_WORDLE: 'REQUEST_GENERATE_WORDLE',
   GENERATE_WORDLE_SUCCESS: 'GENERATE_WORDLE_SUCCESS',
   GENERATE_WORDLE_FAILURE: 'GENERATE_WORDLE_FAILURE',
@@ -7,10 +8,16 @@ export const customWordleConstants = {
 
 const changeWordle = (word: string) => {
   return {
-    type: customWordleConstants.CHANGE_WORDLE,
+    type: customWordleConstants.CHANGE_WORD,
     payload: {
       word,
     },
+  };
+};
+
+const reset = () => {
+  return {
+    type: customWordleConstants.RESET,
   };
 };
 
@@ -43,6 +50,7 @@ const generateWordleFailure = (errorMsg: string) => {
 
 export const customWordleActions = {
   changeWordle,
+  reset,
   generateWordle,
   generateWordleSuccess,
   generateWordleFailure,
