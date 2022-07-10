@@ -11,7 +11,7 @@ function Input() {
   const word = useSelector(customWordleSelectors.selectWord);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(customWordleActions.changeWordle(e.target.value));
+    dispatch(customWordleActions.changeWord(e.target.value));
   };
 
   return (

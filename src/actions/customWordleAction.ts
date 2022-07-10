@@ -6,7 +6,7 @@ export const customWordleConstants = {
   GENERATE_WORDLE_FAILURE: 'GENERATE_WORDLE_FAILURE',
 };
 
-const changeWordle = (word: string) => {
+const changeWord = (word: string) => {
   return {
     type: customWordleConstants.CHANGE_WORD,
     payload: {
@@ -49,7 +49,7 @@ const generateWordleFailure = (errorMsg: string) => {
 };
 
 export const customWordleActions = {
-  changeWordle,
+  changeWord,
   reset,
   generateWordle,
   generateWordleSuccess,

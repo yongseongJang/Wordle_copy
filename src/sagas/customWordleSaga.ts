@@ -12,7 +12,19 @@ function* requestGenerateWordle(payload: { word: string }) {
 
     const pathVariable = generateRandomString(5);
 
-    localStorage.setItem(pathVariable, word);
+    const customWordle = localStorage.getItem('customWordle');
+
+    if (customWordle) {
+      localStorage.setItem(
+        'customWordle',
+        JSON.stringify({ ...JSON.parse(customWordle), [pathVariable]: word }),
+      );
+    } else {
+      localStorage.setItem(
+        'customWordle',
+        JSON.stringify({ [pathVariable]: word }),
+      );
+    }
 
     yield put(customWordleActions.generateWordleSuccess(pathVariable));
   } catch (err) {
