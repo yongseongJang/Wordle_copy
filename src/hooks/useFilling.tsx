@@ -2,7 +2,7 @@ import React from 'react';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { gameActions } from '../actions';
+import { gameActions, statisticsActions } from '../actions';
 import { gameSelectors } from '../selectors';
 
 function useFilling() {
@@ -10,6 +10,7 @@ function useFilling() {
 
   const answer = useSelector(gameSelectors.selectAnswer);
   const spelling = useSelector(gameSelectors.selectSpelling);
+  const currentTimes = useSelector(gameSelectors.selectCurrentTimes);
 
   const fillInBoard = useCallback(
     (key: string) => {
@@ -27,8 +28,9 @@ function useFilling() {
 
           if (answer === word) {
             dispatch(gameActions.validateWordleSuccess(word));
+            dispatch(statisticsActions.updateStatistics(true, currentTimes));
           } else {
-            dispatch(gameActions.validateWordle(word));
+            dispatch(gameActions.validateWordle(word, currentTimes));
           }
         }
 
@@ -41,11 +43,12 @@ function useFilling() {
         dispatch(gameActions.addSpelling(key));
       }
     },
-    [answer, spelling],
+    [answer, spelling, currentTimes],
   );
 
   return {
     fillInBoard,
+    answer,
   };
 }
 

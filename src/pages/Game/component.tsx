@@ -1,23 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 
 import { useFilling } from '../../hooks';
 import { gameSelectors } from '../../selectors';
-import { gameActions } from '../../actions';
+import { gameActions, statisticsActions } from '../../actions';
 import { history } from '../../utils/history';
 
-import { GameBoard, Keyboard } from '../../features';
+import { GameBoard, Keyboard, StatisticsModal } from '../../features';
 import { Toast } from '../../components';
 import { GameState } from '../../reducers/gameReducer';
+import { StatisticsState } from '../../reducers/statisticsReducer';
 
 function Game() {
   const dispatch = useDispatch();
   const errorMsg = useSelector(gameSelectors.selectErrorMsg);
   const endTime = useSelector(gameSelectors.selectEndTime);
-  const { fillInBoard } = useFilling();
+  const { fillInBoard, answer } = useFilling();
 
   useLayoutEffect(() => {
     const href = window.location.href;
@@ -43,6 +44,16 @@ function Game() {
     }
   }, []);
 
+  useEffect(() => {
+    const statistics: StatisticsState = JSON.parse(
+      localStorage.getItem('statistics'),
+    );
+
+    if (statistics) {
+      dispatch(statisticsActions.loadStatistics(statistics));
+    }
+  }, []);
+
   const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (endTime) return;
 
@@ -50,13 +61,18 @@ function Game() {
   };
 
   return (
-    <div css={gameStyle} onKeyUp={handleKeyUp} tabIndex={0}>
-      {errorMsg && <Toast text={errorMsg} />}
-      <div>
-        <GameBoard />
-        <Keyboard />
+    <>
+      <div css={gameStyle} onKeyUp={handleKeyUp} tabIndex={0}>
+        {errorMsg && <Toast text={errorMsg} />}
+        {endTime && <Toast text={answer} />}
+        <div>
+          <h1>wordle</h1>
+          <GameBoard />
+          <Keyboard />
+        </div>
       </div>
-    </div>
+      <StatisticsModal />
+    </>
   );
 }
 
@@ -74,6 +90,14 @@ const gameStyle = css`
     flex-direction: column;
     margin: auto;
     height: 100%;
+
+    > h1 {
+      margin: 10px auto;
+      font-family: 'Lobster', cursive;
+      font-weight: 300;
+      font-size: 50px;
+      text-align: center;
+    }
   }
 `;
 

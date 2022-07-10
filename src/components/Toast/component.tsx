@@ -25,7 +25,7 @@ const fadeOut = keyframes`
 
 const ToastStyle = css`
   position: absolute;
-  top: 45px;
+  top: 65px;
   left: 50%;
   transform: translate(-50%, 0);
   width: fit-content;

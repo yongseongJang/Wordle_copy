@@ -23,7 +23,7 @@ const defaultValues: State = {
   words: List(),
   spelling: List(),
   keyboard: Map(),
-  times: 0,
+  times: 1,
   startTime: null,
   endTime: null,
 };
@@ -90,6 +90,10 @@ export const gameReducer = (
         .update('spelling', () => List())
         .update('words', () => state.words.push(payload.word))
         .update('keyboard', () => Map(keyboard));
+
+      if (nextState.times === 7) {
+        nextState = nextState.update('endTime', () => new Date().getTime());
+      }
 
       href = window.location.href;
       localStorage.setItem(

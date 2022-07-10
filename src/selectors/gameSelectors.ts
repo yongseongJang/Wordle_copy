@@ -28,6 +28,14 @@ const selectEndTime = (state: RootState) => {
   return state.gameReducer.endTime;
 };
 
+const selectPlayTime = (state: RootState) => {
+  if (state.gameReducer.endTime) {
+    return state.gameReducer.endTime - state.gameReducer.startTime;
+  }
+
+  return null;
+};
+
 export default {
   selectSpelling,
   selectWord,
@@ -36,4 +44,5 @@ export default {
   selectKeyboard,
   selectErrorMsg,
   selectEndTime,
+  selectPlayTime,
 };

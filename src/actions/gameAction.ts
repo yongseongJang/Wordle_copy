@@ -26,11 +26,12 @@ const removeSpelling = () => {
   };
 };
 
-const validateWordle = (word: string) => {
+const validateWordle = (word: string, times: number) => {
   return {
     type: gameConstants.REQUEST_VALIDATE_WORDLE,
     payload: {
       word,
+      times,
     },
   };
 };
