@@ -11,7 +11,9 @@ function Input() {
   const word = useSelector(customWordleSelectors.selectWord);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(customWordleActions.changeWord(e.target.value));
+    const value = e.target.value.replace(/[^a-zA-Z]/g, '').toLowerCase();
+
+    dispatch(customWordleActions.changeWord(value));
   };
 
   return (
