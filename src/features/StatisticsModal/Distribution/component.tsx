@@ -89,7 +89,7 @@ const percentStyle = (percent: number) => css`
       color: #fff;
       width: ${percent}%;
       height: 100%;
-      padding: 0 8px;
+      padding: ${percent === 100 ? '0' : '0 8px'};
       border-radius: 50px;
       background-color: #57ac57;
     }
