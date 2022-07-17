@@ -8,7 +8,14 @@ const validateWord = async (word: string) => {
 
     return;
   } catch (err) {
-    throw new Error('Please enter the correct word');
+    if (
+      (err.code && err.code === 'ERR_BAD_RESPONSE') ||
+      (err.message && err.message === 'Request failed with status code 500')
+    ) {
+      throw new Error('Dictionary api server error');
+    } else {
+      throw new Error('Please enter the correct word');
+    }
   }
 };
 

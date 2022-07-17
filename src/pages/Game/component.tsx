@@ -10,7 +10,7 @@ import { gameActions, statisticsActions } from '../../actions';
 import { history } from '../../utils/history';
 
 import { GameBoard, Keyboard, StatisticsModal } from '../../features';
-import { Toast } from '../../components';
+import { Spinner, Toast } from '../../components';
 import { GameState } from '../../reducers/gameReducer';
 import { StatisticsState } from '../../reducers/statisticsReducer';
 
@@ -18,6 +18,7 @@ function Game() {
   const dispatch = useDispatch();
   const errorMsg = useSelector(gameSelectors.selectErrorMsg);
   const endTime = useSelector(gameSelectors.selectEndTime);
+  const isRequesting = useSelector(gameSelectors.selectIsRequesting);
   const { fillInBoard, answer } = useFilling();
 
   useLayoutEffect(() => {
@@ -28,9 +29,13 @@ function Game() {
     );
 
     if (beforeState) {
-      dispatch(gameActions.loadBeforeState(beforeState));
+      if (pathVariable === 'game' && beforeState.endTime) {
+        localStorage.removeItem('game');
+      } else {
+        dispatch(gameActions.loadBeforeState(beforeState));
 
-      return;
+        return;
+      }
     }
 
     const customWordle = JSON.parse(localStorage.getItem('customWordle'));
@@ -38,7 +43,13 @@ function Game() {
     if (customWordle && customWordle[pathVariable]) {
       dispatch(gameActions.loadAnswer(customWordle[pathVariable]));
     } else if (pathVariable === 'game') {
-      dispatch(gameActions.loadAnswer('world'));
+      const answerList = ['world', 'voice', 'place', 'month', 'daily', 'three'];
+
+      dispatch(
+        gameActions.loadAnswer(
+          answerList[Math.floor(Math.random() * answerList.length)],
+        ),
+      );
     } else {
       history.replace('/');
     }
@@ -65,6 +76,7 @@ function Game() {
       <div css={gameStyle} onKeyUp={handleKeyUp} tabIndex={0}>
         {errorMsg && <Toast text={errorMsg} />}
         {endTime && <Toast text={answer} />}
+        {isRequesting && <Spinner />}
         <div>
           <h1>wordle</h1>
           <GameBoard />

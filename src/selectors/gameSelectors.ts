@@ -36,6 +36,10 @@ const selectPlayTime = (state: RootState) => {
   return null;
 };
 
+const selectIsRequesting = (state: RootState) => {
+  return state.gameReducer.isRequesting;
+};
+
 export default {
   selectSpelling,
   selectWord,
@@ -45,4 +49,5 @@ export default {
   selectErrorMsg,
   selectEndTime,
   selectPlayTime,
+  selectIsRequesting,
 };
