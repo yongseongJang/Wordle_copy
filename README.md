@@ -16,3 +16,13 @@ npm install -g serve
 npm run build
 npm run start   // Wordle_copy directory에서 해당 명령어를 실행해야 합니다.
 ```
+
+## 게임방법
+5글자의 영어단어를 추측하는 게임
++ 게임의 정답이 APPLE이고 PLACE라는 단어를 입력할 경우, 아래처럼 표시됩니다.
+
+  ![image](https://user-images.githubusercontent.com/58353164/181114005-7b1972ea-3090-4c79-b94a-099d7be617a8.png)
+  
++ 타일이 초록색으로 표시된다면 글자가 정답에 포함되고 같은 위치에 있습니다.
++ 타일이 노란색으로 표시된다면 글자가 정답에 포함되지만 같은 위치에 있지는 않습니다.
++ 타일이 회색으로 표시된다면 정답에 포함되지 않는 글자입니다.
